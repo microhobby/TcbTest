@@ -1,0 +1,23 @@
+{
+    "torizon_psswd": "1234",
+    "torizon_login": "torizon",
+    "torizon_ip": "192.168.0.62",
+    "host_ip": "192.168.0.51",
+    "torizon_workspace": "${workspaceFolder}",
+    "torizon_debug_port": "",
+    "torizon_debug_ssh_port": "",
+    "torizon_debug_port2": "",
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "torizon_debug_port3": "",
+    "torizon_gpu": "-vivante",
+    "torizon_arch": "aarch64",
+    "wait_sync": "1",
+    "torizon_run_as": "torizon",
+    "torizon_app_root": "/home/torizon",
+    "tcb.version": "early-access",
+    "tcb.packageName": "DrewTest",
+    "tcb.fleetName": "Jujubas",
+    "tcb.clientId": "api-v2_326d4760_0ec8aebf-fa7c-49d0-95f3-89c7178ba1c1",
+    "tcb.clientSecret": "secret",
+    "tcb.ostreeBranch": "drew-test"
+}
