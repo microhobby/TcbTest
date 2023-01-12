@@ -21,22 +21,21 @@ jobs:
         env:
           TORIZON_ARCH: ""
         run: |
-          $_settings = Get-Item ./.vscode/settings.json | ConvertFrom-Json
+          $_settings = (Get-Content ./.vscode/settings.json | ConvertFrom-Json)
           $env:TORIZON_ARCH = $_settings.torizon_arch
           if ($env:TORIZON_ARCH -eq "aarch64") { $env:TORIZON_ARCH = "arm64" }
           if ($env:TORIZON_ARCH -eq "armhf") { $env:TORIZON_ARCH = "arm" }
+          echo "TORIZON_ARCH=$env:TORIZON_ARCH" | `
+            Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Build Application
         shell: pwsh
-        env:
-          TORIZON_ARCH: ${{ env.TORIZON_ARCH }}
         run: |
           ./.vscode/tasks.ps1 run build-torizon-$env:TORIZON_ARCH
 
       - name: Create Image
         shell: pwsh
         env:
-          TORIZON_ARCH: ${{ env.TORIZON_ARCH }}
           DOCKER_PSSWD: ${{ secrets.DOCKER_PSSWD }}
           TASKS_OVERRIDE_ENV: "False"
           TASKS_ITERATIVE: "False"
@@ -46,5 +45,5 @@ jobs:
       - name: Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: torizoncore
+          name: docker-compose-prod
           path: docker-compose.prod.yml
