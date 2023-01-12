@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  actions-test-debug:
+    build:
+      context: .
+      dockerfile: Dockerfile.debug
+    image: ${LOCAL_REGISTRY}:5002/actions-test-debug:${TAG}
+    ports:
+      - 2222:2222
+
+  actions-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${DOCKER_LOGIN}/actions-test:${TAG}

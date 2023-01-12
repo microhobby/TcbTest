@@ -1,0 +1,50 @@
+name: Build & Deploy TorizonCore
+on:
+  push:
+    branches:
+      - "app"
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    name: Build & Deploy
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        id: cache
+        with:
+          path: storage/
+          key: tcb
+
+      - name: Initial Setup
+        shell: pwsh
+        env:
+          TORIZON_ARCH: ""
+        run: |
+          $_settings = Get-Item ./.vscode/settings.json | ConvertFrom-Json
+          $env:TORIZON_ARCH = $_settings.torizon_arch
+          if ($env:TORIZON_ARCH -eq "aarch64") { $env:TORIZON_ARCH = "arm64" }
+          if ($env:TORIZON_ARCH -eq "armhf") { $env:TORIZON_ARCH = "arm" }
+
+      - name: Build Application
+        shell: pwsh
+        env:
+          TORIZON_ARCH: ${{ env.TORIZON_ARCH }}
+        run: |
+          ./.vscode/tasks.ps1 run build-torizon-$env:TORIZON_ARCH
+
+      - name: Create Image
+        shell: pwsh
+        env:
+          TORIZON_ARCH: ${{ env.TORIZON_ARCH }}
+          DOCKER_PSSWD: ${{ secrets.DOCKER_PSSWD }}
+          TASKS_OVERRIDE_ENV: "False"
+          TASKS_ITERATIVE: "False"
+        run: |
+          ./.vscode/tasks.ps1 run create-production-image
+
+      - name: Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: torizoncore
+          path: docker-compose.prod.yml

@@ -1,0 +1,19 @@
+{
+  "torizon_psswd": "1234",
+  "torizon_login": "torizon",
+  "torizon_ip": "192.168.0.62",
+  "host_ip": "192.168.0.51",
+  "torizon_workspace": "${workspaceFolder}",
+  "torizon_debug_port": "",
+  "torizon_debug_ssh_port": "2222",
+  "torizon_debug_port2": "",
+  "torizon_debug_port3": "",
+  "torizon_gpu": "-vivante",
+  "torizon_arch": "aarch64",
+  "wait_sync": "1",
+  "torizon_run_as": "torizon",
+  "torizon_app_root": "/home/torizon",
+  "docker_registry": "matheuscastello",
+  "docker_password": "secret",
+  "docker_tag": "v1"
+}
