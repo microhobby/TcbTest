@@ -10,16 +10,12 @@ jobs:
     name: Build & Deploy
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/cache@v3
-        id: cache
-        with:
-          path: storage/
-          key: tcb
 
       - name: Initial Setup
         shell: pwsh
         env:
           TORIZON_ARCH: ""
+          PLATFORM_CREDENTIALS: ${{ secrets.PLATFORM_CREDENTIALS }}
         run: |
           $_settings = (Get-Content ./.vscode/settings.json | ConvertFrom-Json)
           $env:TORIZON_ARCH = $_settings.torizon_arch
@@ -27,20 +23,25 @@ jobs:
           if ($env:TORIZON_ARCH -eq "armhf") { $env:TORIZON_ARCH = "arm" }
           echo "TORIZON_ARCH=$env:TORIZON_ARCH" | `
             Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo $env:PLATFORM_CREDENTIALS | base64 -d > credentials.zip
 
       - name: Build Application
         shell: pwsh
+        env:
+          TASKS_ITERATIVE: "False"
         run: |
           ./.vscode/tasks.ps1 run build-torizon-$env:TORIZON_ARCH
 
-      - name: Create Image
+      - name: Create and Publish Image
         shell: pwsh
         env:
-          DOCKER_PSSWD: ${{ secrets.DOCKER_PSSWD }}
-          TASKS_OVERRIDE_ENV: "False"
           TASKS_ITERATIVE: "False"
+          TASKS_OVERRIDE_ENV: "False"
+          DOCKER_PSSWD: ${{ secrets.DOCKER_PSSWD }}
+          PLATFORM_CLIENT_ID: ${{ secrets.PLATFORM_CLIENT_ID }}
+          PLATFORM_CLIENT_SECRET: ${{ secrets.PLATFORM_CLIENT_SECRET }}
         run: |
-          ./.vscode/tasks.ps1 run create-production-image
+          ./.vscode/tasks.ps1 run tcb-platform-publish
 
       - name: Artifacts
         uses: actions/upload-artifact@v2

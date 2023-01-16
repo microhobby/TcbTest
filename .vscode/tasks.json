@@ -1616,7 +1616,38 @@
                 "id": "flame",
                 "color": "terminal.ansiYellow"
             }
-        }
+        },
+        {
+            "label": "tcb-platform-publish",
+            "detail": "",
+            "command": "DOCKER_HOST=",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": {
+                    "VSCODE_CMD": "--verbose platform push --credentials credentials.zip --package-name ${command:tcb.packageName} --package-version ${command:tcb.getNextPackageVersion} docker-compose.prod.yml"
+                }
+            },
+            "args": [
+                "source",
+                "./.conf/tcb-env-setup.sh",
+                "-s",
+                "${workspaceFolder}/storage",
+                "-t",
+                "${config:tcb.version}"
+            ],
+            "problemMatcher": [
+                "$tsc"
+            ],
+            "icon": {
+                "id": "flame",
+                "color": "terminal.ansiYellow"
+            },
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "create-production-image"
+            ]
+        },
     ],
     "inputs": [
         {
