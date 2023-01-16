@@ -47,8 +47,18 @@ jobs:
         run: |
           ./.vscode/tasks.ps1 run tcb-platform-publish
 
+      - name: Deploy Application
+        shell: pwsh
+        env:
+          TASKS_ITERATIVE: "False"
+          TASKS_OVERRIDE_ENV: "False"
+          PLATFORM_CLIENT_ID: ${{ secrets.PLATFORM_CLIENT_ID }}
+          PLATFORM_CLIENT_SECRET: ${{ secrets.PLATFORM_CLIENT_SECRET }}
+        run: |
+          ./.vscode/tasks.ps1 run tcb-platform-deploy
+
       - name: Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: docker-compose-prod
           path: docker-compose.prod.yml
