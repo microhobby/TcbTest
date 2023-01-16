@@ -7,9 +7,13 @@ services:
     image: ${LOCAL_REGISTRY}:5002/actions-test-debug:${TAG}
     ports:
       - 2222:2222
+    devices:
+      - /dev/gpiochip0
 
   actions-test:
     build:
       context: .
       dockerfile: Dockerfile
     image: ${DOCKER_LOGIN}/actions-test:${TAG}
+    devices:
+      - /dev/gpiochip0
