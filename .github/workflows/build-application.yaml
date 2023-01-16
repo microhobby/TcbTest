@@ -15,7 +15,6 @@ jobs:
         shell: pwsh
         env:
           TORIZON_ARCH: ""
-          PLATFORM_CREDENTIALS: ${{ secrets.PLATFORM_CREDENTIALS }}
         run: |
           $_settings = (Get-Content ./.vscode/settings.json | ConvertFrom-Json)
           $env:TORIZON_ARCH = $_settings.torizon_arch
@@ -23,7 +22,12 @@ jobs:
           if ($env:TORIZON_ARCH -eq "armhf") { $env:TORIZON_ARCH = "arm" }
           echo "TORIZON_ARCH=$env:TORIZON_ARCH" | `
             Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          bash -c "echo $PLATFORM_CREDENTIALS | base64 -d > credentials.zip"
+
+      - name: Decode Credentials
+        env:
+          PLATFORM_CREDENTIALS: ${{ secrets.PLATFORM_CREDENTIALS }}
+        run: |
+          echo $PLATFORM_CREDENTIALS | base64 -d > credentials.zip
 
       - name: Build Application
         shell: pwsh
