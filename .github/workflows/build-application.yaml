@@ -55,7 +55,7 @@ jobs:
           PLATFORM_CLIENT_ID: ${{ secrets.PLATFORM_CLIENT_ID }}
           PLATFORM_CLIENT_SECRET: ${{ secrets.PLATFORM_CLIENT_SECRET }}
         run: |
-          ./.vscode/tasks.ps1 run tcb-platform-deploy
+          ./.vscode/tasks.ps1 run platform-update-fleet
 
       - name: Artifacts
         uses: actions/upload-artifact@v3
