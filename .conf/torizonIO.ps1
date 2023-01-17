@@ -186,6 +186,13 @@ function update-fleet-latest () {
 
     $_targetHash = target-latest-hash $_targetName
     $_target = _getTargetByHash($_targetHash)
+    
+    if ($null -eq $_target) {
+        Write-Host -ForegroundColor Red "target not found"
+        exit 404
+    }
+
+    $_target = $_target[0]
     $_targetVersion = $_target.custom.version
     $_hardwareId = $_target.custom.hardwareIds[0]
 
