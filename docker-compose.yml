@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  jujubinhas-debug:
+    build:
+      context: .
+      dockerfile: Dockerfile.debug
+    image: ${LOCAL_REGISTRY}:5002/jujubinhas-debug:${TAG}
+    ports:
+      - 2222:2222
+    devices:
+      - /dev/gpiochip0
+
+  jujubinhas:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${DOCKER_LOGIN}/jujubinhas:${TAG}
+    devices:
+      - /dev/gpiochip0
