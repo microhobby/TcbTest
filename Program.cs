@@ -20,4 +20,4 @@ gpioController.OpenPin(gpioPin, pinMode);
 //     Thread.Sleep(500);
 // }
 
-Console.WriteLine("NOTHING TO DO HERE, BYE!");
+Console.WriteLine("NOTHING TO DO HERE, BYE 2!");
