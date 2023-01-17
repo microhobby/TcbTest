@@ -198,7 +198,7 @@ function update-fleet-latest () {
         Initialize-TorizonPlatformAPITargetDescription `
             -Target "$_targetName-$_targetVersion" `
             -Checksum $Checksum `
-            -TargetLength 0 `
+            -TargetLength $_target.length `
             -Uri $Null `
             -UserDefinedCustom "From ApolloX"
 
