@@ -10,12 +10,14 @@ var gpioPin = 0;
 var pinMode = PinMode.Output;
 gpioController.OpenPin(gpioPin, pinMode);
 
-while (true) {
-    gpioController.Write(gpioPin, PinValue.High);
-    Console.WriteLine("LED ON");
-    Thread.Sleep(500);
+// while (true) {
+//     gpioController.Write(gpioPin, PinValue.High);
+//     Console.WriteLine("LED ON");
+//     Thread.Sleep(500);
     
-    gpioController.Write(gpioPin, PinValue.Low);
-    Console.WriteLine("LED OFF");
-    Thread.Sleep(500);
-}
+//     gpioController.Write(gpioPin, PinValue.Low);
+//     Console.WriteLine("LED OFF");
+//     Thread.Sleep(500);
+// }
+
+Console.WriteLine("NOTHING TO DO HERE, BYE!");
