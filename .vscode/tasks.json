@@ -1625,7 +1625,7 @@
             "options": {
                 "cwd": "${workspaceFolder}",
                 "env": {
-                    "VSCODE_CMD": "--verbose platform push --credentials credentials.zip --package-name ${command:tcb.packageName} --package-version ${command:tcb.getNextPackageVersion} docker-compose.prod.yml"
+                    "VSCODE_CMD": "--verbose platform push --credentials credentials.zip --package-name ${command:tcb.packageName} --package-version ${command:tcb.getNextPackageVersion} --canonicalize docker-compose.prod.yml"
                 }
             },
             "args": [

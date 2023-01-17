@@ -62,4 +62,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: docker-compose-prod
-          path: docker-compose.prod.yml
+          path: |
+            docker-compose.prod.yml
+            docker-compose.prod.lock.yml
