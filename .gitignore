@@ -1,0 +1,4 @@
+bin
+obj
+credentials.zip
+docker-compose.prod.yml
